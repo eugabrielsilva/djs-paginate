@@ -1,0 +1,19 @@
+{
+    "name": "@eugabrielsilva/djs-paginate",
+    "description": "Simple discord.js v13 embed pagination tool",
+    "version": "1.0.0",
+    "main": "djs-paginate.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/eugabrielsilva/djs-paginate.git"
+    },
+    "author": "Gabriel Silva",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/eugabrielsilva/djs-paginate/issues"
+    },
+    "homepage": "https://github.com/eugabrielsilva/djs-paginate#readme",
+    "dependencies": {
+        "discord.js": "^13.5.0"
+    }
+}
