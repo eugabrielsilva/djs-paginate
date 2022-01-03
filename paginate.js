@@ -1,7 +1,8 @@
 const {MessageActionRow, MessageButton} = require("discord.js");
 
-const paginate = async (message, pages, options) => {
+const paginate = async (message, pages, options = {}) => {
 
+    if(!message) throw new Error('Please provide a message object.');
     if(!pages || pages.length === 0) return;
 
     options = {
