@@ -1,8 +1,8 @@
 {
     "name": "@eugabrielsilva/djs-paginate",
-    "description": "Simple discord.js v13 embed pagination tool",
+    "description": "Simpler discord.js v13 embed pagination tool",
     "version": "1.0.0",
-    "main": "djs-paginate.js",
+    "main": "paginate.js",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/eugabrielsilva/djs-paginate.git"
