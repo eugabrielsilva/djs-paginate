@@ -1,18 +1,26 @@
 const {MessageActionRow, MessageButton} = require("discord.js");
 
-const paginate = async (message, pages, timeout = 60, prevText = "⏪ Anterior", nextText = "Próxima ⏩", pageText = "📄 Página") => {
+const paginate = async (message, pages, options) => {
 
     if(!pages || pages.length === 0) return;
 
+    options = {
+        timeout: options.timeout ?? 60,
+        prevText: options.prevText ?? "⏪ Anterior",
+        nextText: options.nextText ?? "Próxima ⏩",
+        pageText: options.pageText ?? "📄 Página",
+        pageSeparator: options.pageSeparator ?? "/"
+    };
+
     let navBtn1 = new MessageButton({
         customId: "previousbtn",
-        label: prevText,
+        label: options.prevText,
         style: "SECONDARY"
     });
 
     let navBtn2 = new MessageButton({
         customId: "nextbtn",
-        label: nextText,
+        label: options.nextText,
         style: "SECONDARY"
     });
 
@@ -20,7 +28,7 @@ const paginate = async (message, pages, timeout = 60, prevText = "⏪ Anterior",
 
     const row = new MessageActionRow({components: [navBtn1, navBtn2]});
     const curPage = await message.channel.send({
-        embeds: [pages[page].setFooter({text: `${pageText} ${page + 1} / ${pages.length}`})],
+        embeds: [pages[page].setFooter({text: `${options.pageText} ${page + 1} ${options.pageSeparator} ${pages.length}`})],
         components: [row],
     });
 
@@ -30,7 +38,7 @@ const paginate = async (message, pages, timeout = 60, prevText = "⏪ Anterior",
 
     const collector = curPage.createMessageComponentCollector({
         filter,
-        time: timeout * 1000,
+        time: options.timeout * 1000,
     });
 
     collector.on("collect", async (i) => {
@@ -46,7 +54,7 @@ const paginate = async (message, pages, timeout = 60, prevText = "⏪ Anterior",
         }
         await i.deferUpdate();
         await i.editReply({
-            embeds: [pages[page].setFooter({text: `${pageText} ${page + 1} / ${pages.length}`})],
+            embeds: [pages[page].setFooter({text: `${options.pageText} ${page + 1} ${options.pageSeparator} ${pages.length}`})],
             components: [row],
         });
         collector.resetTimer();
@@ -58,7 +66,7 @@ const paginate = async (message, pages, timeout = 60, prevText = "⏪ Anterior",
                 components: [navBtn1.setDisabled(true), navBtn2.setDisabled(true)]
             });
             curPage.edit({
-                embeds: [pages[page].setFooter({text: `${pageText} ${page + 1} / ${pages.length}`})],
+                embeds: [pages[page].setFooter({text: `${options.pageText} ${page + 1} ${options.pageSeparator} ${pages.length}`})],
                 components: [disabledRow],
             }).catch(console.log);
         }
